@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools==84.2.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recorrencia-civil"
+version = "1.0.0"
+description = "Expansão local de recorrências em datas civis, com exceções, posições e cobertura explícita."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Contribuidores da LOFRANO TECNOLOGIA"}]
+keywords = ["recurrence", "rrule", "calendar", "date", "portugues"]
+classifiers = ["Programming Language :: Python :: 3", "Operating System :: OS Independent"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["build==1.5.0", "python-dateutil==4.0.0"]
+
+[project.scripts]
+recorrencia-civil = "recorrencia_civil.cli:main"
+
+[project.urls]
+Homepage = "https://lofranotecnologia.com.br"
+Repository = "https://github.com/martinlofranodeoliveira/recorrencia-civil"
+Issues = "https://github.com/martinlofranodeoliveira/recorrencia-civil/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

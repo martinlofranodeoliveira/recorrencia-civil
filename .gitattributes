@@ -1,0 +1,3 @@
+* text=auto eol=lf
+*.csv -text whitespace=cr-at-eol
+examples/*-result.md whitespace=-blank-at-eof

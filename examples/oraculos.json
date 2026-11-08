@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "oracle": {
+    "name": "python-dateutil",
+    "version": "4.0.0"
+  },
+  "cases": {
+    "manual": 17,
+    "generated": 272,
+    "total": 289,
+    "inclusiveWindowPartitions": 72,
+    "separateProfileRegressions": 1
+  },
+  "occurrencesCompared": 8109,
+  "knownDivergences": [
+    {
+      "id": "weekly_bysetpos_initial_period",
+      "input": {
+        "series": {
+          "dtstart": "2026-01-08",
+          "rrule": "FREQ=WEEKLY;INTERVAL=1;COUNT=3;BYDAY=MO,TH;BYSETPOS=2;WKST=MO",
+          "rdates": [],
+          "exdates": []
+        },
+        "window": {
+          "start": "2026-01-08",
+          "end": "2026-02-01",
+          "inclusive": true
+        }
+      },
+      "engineDates": [
+        "2026-01-08",
+        "2026-01-15",
+        "2026-01-22"
+      ],
+      "dateutilRruleDates": [
+        "2026-01-15",
+        "2026-01-22",
+        "2026-01-29"
+      ],
+      "dateutilUnionDates": [
+        "2026-01-08",
+        "2026-01-15",
+        "2026-01-22",
+        "2026-01-29"
+      ],
+      "profilePolicy": "Selecionar BYSETPOS no periodo completo alinhado a WKST antes do corte de DTSTART.",
+      "upstream": {
+        "issue": "https://github.com/dateutil/dateutil/issues/1398",
+        "pullRequest": "https://github.com/dateutil/dateutil/pull/1575",
+        "statusObserved": "open_proposal",
+        "statusObservedOn": "2026-11-08"
+      },
+      "assessment": "Divergencia conhecida e reproduzida; sem afirmacao de bug aceito upstream."
+    }
+  ],
+  "corpusSha256": "0dc3efb68937c367a37703ebb3f0a796392bdbbb156d5cff11d60366262d4fd3"
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "complete": true,
+  "stopReason": null,
+  "window": {
+    "start": "2026-01-01",
+    "end": "2026-12-31",
+    "inclusive": true
+  },
+  "verifiedThrough": "2026-12-31",
+  "series": {
+    "dtstart": "2026-01-30",
+    "rrule": "FREQ=MONTHLY;INTERVAL=1;COUNT=6;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1;WKST=MO",
+    "rdates": [
+      "2026-04-01"
+    ],
+    "exdates": [
+      "2026-03-31"
+    ]
+  },
+  "limits": {
+    "maxPeriods": 10000,
+    "maxDays": 100000,
+    "maxOccurrences": 5000
+  },
+  "stats": {
+    "periodsEvaluated": 6,
+    "daysExamined": 181,
+    "validationDays": 31,
+    "ruleOccurrencesConsumed": 6,
+    "resultsEmitted": 6
+  },
+  "occurrences": [
+    {
+      "date": "2026-01-30",
+      "sources": [
+        "dtstart",
+        "rrule"
+      ]
+    },
+    {
+      "date": "2026-02-27",
+      "sources": [
+        "rrule"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "sources": [
+        "rdate"
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "sources": [
+        "rrule"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "sources": [
+        "rrule"
+      ]
+    },
+    {
+      "date": "2026-06-30",
+      "sources": [
+        "rrule"
+      ]
+    }
+  ]
+}

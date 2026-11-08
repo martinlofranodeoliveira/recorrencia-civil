@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "series": {
+    "dtstart": "2026-01-30",
+    "rrule": "FREQ=MONTHLY;COUNT=6;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1",
+    "rdates": [
+      "2026-04-01"
+    ],
+    "exdates": [
+      "2026-03-31"
+    ]
+  },
+  "window": {
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  }
+}

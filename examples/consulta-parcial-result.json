@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "status": "incomplete",
+  "complete": false,
+  "stopReason": "period_budget",
+  "window": {
+    "start": "2025-12-31",
+    "end": "2026-01-10",
+    "inclusive": true
+  },
+  "verifiedThrough": "2026-01-03",
+  "series": {
+    "dtstart": "2026-01-01",
+    "rrule": "FREQ=DAILY;INTERVAL=1;COUNT=10;WKST=MO",
+    "rdates": [
+      "2025-12-31",
+      "2026-01-08"
+    ],
+    "exdates": [
+      "2026-01-02"
+    ]
+  },
+  "limits": {
+    "maxPeriods": 3,
+    "maxDays": 100000,
+    "maxOccurrences": 5000
+  },
+  "stats": {
+    "periodsEvaluated": 3,
+    "daysExamined": 3,
+    "validationDays": 1,
+    "ruleOccurrencesConsumed": 3,
+    "resultsEmitted": 3
+  },
+  "occurrences": [
+    {
+      "date": "2025-12-31",
+      "sources": [
+        "rdate"
+      ]
+    },
+    {
+      "date": "2026-01-01",
+      "sources": [
+        "dtstart",
+        "rrule"
+      ]
+    },
+    {
+      "date": "2026-01-03",
+      "sources": [
+        "rrule"
+      ]
+    }
+  ]
+}
