@@ -182,6 +182,25 @@ class CliTests(unittest.TestCase):
         self.assertEqual(result.stdout, to_json(expand_document(document())).encode())
         self.assert_private_error(self.run_cli(input=self.raw))
 
+    def test_stdout_preserves_utf8_and_report_newlines_through_translating_wrapper(self):
+        for format, render in [('json', to_json), ('markdown', to_markdown), ('csv', to_csv)]:
+            for arguments, limits, status in [([], ExpansionLimits(), 0),
+                                             (['--max-periods', '0'], ExpansionLimits(max_periods=0), 2)]:
+                with self.subTest(format=format, arguments=arguments):
+                    raw = io.BytesIO()
+                    # Reproduce Windows newline translation on every test OS.
+                    # ASCII also proves that report encoding is always UTF-8.
+                    output = io.TextIOWrapper(raw, encoding='ascii', newline='\r\n')
+                    diagnostic = io.StringIO()
+                    try:
+                        with patch.object(cli.sys, 'stdout', output), patch.object(cli.sys, 'stderr', diagnostic):
+                            result = cli.main([str(self.source), '--format', format, *arguments])
+                        self.assertEqual(result, status, diagnostic.getvalue())
+                        self.assertEqual(raw.getvalue(), render(expand_document(document(), limits=limits)).encode('utf-8'))
+                        self.assertEqual(diagnostic.getvalue(), '')
+                    finally:
+                        output.close()
+
     def test_help_version_and_sanitized_argument_failures(self):
         for option in ('--help', '--version'):
             result = self.run_cli(option)
@@ -344,6 +363,32 @@ class CliTests(unittest.TestCase):
             self.assertNotIn('PRIVATE_', diagnostic.getvalue())
         with patch.object(cli.sys, 'stderr', BrokenWrite()):
             self.assertEqual(cli.main(['--PRIVATE_UNKNOWN']), 3)
+
+    def test_binary_stdout_write_flush_and_short_write_failures_are_sanitized(self):
+        class BrokenWrite(io.BytesIO):
+            def write(self, value):
+                raise OSError('PRIVATE_BINARY_BACKEND')
+        class BrokenFlush(io.BytesIO):
+            def flush(self):
+                if self.tell():
+                    raise OSError('PRIVATE_BINARY_BACKEND')
+        class ShortWrite(io.BytesIO):
+            def write(self, value):
+                super().write(value[:1])
+                return 1
+        class BinaryOutput:
+            def __init__(self, buffer):
+                self.buffer = buffer
+            def flush(self):
+                self.buffer.flush()
+            def fileno(self):
+                raise OSError('PRIVATE_NO_DESCRIPTOR')
+        for buffer in (BrokenWrite(), BrokenFlush(), ShortWrite()):
+            diagnostic = io.StringIO()
+            with patch.object(cli.sys, 'stdout', BinaryOutput(buffer)), patch.object(cli.sys, 'stderr', diagnostic):
+                self.assertEqual(cli.main([str(self.source)]), 3)
+            self.assertIn('output_write', diagnostic.getvalue())
+            self.assertNotIn('PRIVATE_', diagnostic.getvalue())
 
 
 if __name__ == '__main__':

@@ -152,7 +152,7 @@ python -m recorrencia_civil entrada.json --max-days 10000 --max-occurrences 500
 
 `FILE` é obrigatório. `-` permite stdin explicitamente; nenhum relógio ou caminho padrão preenche a origem. Arquivos locais são abertos para leitura e precisam ser arquivos regulares, verificados por `fstat` no descritor aberto. FIFO é recusado sem bloquear a abertura. O conteúdo da origem não é alterado.
 
-Sem `--output`, o relatório vai para stdout com flush protegido. Falha de escrita ou pipe fechado resulta em erro. `--output NEW` exige um destino novo em diretório já existente: a CLI escreve um temporário no mesmo diretório, faz flush e `fsync`, e publica com link exclusivo. Não há fallback de sobrescrita. Se outro processo cria o destino durante a publicação, o arquivo dele é preservado e somente o temporário da operação é removido. Usar a própria origem como destino falha preservando-a.
+Sem `--output`, o relatório vai para stdout em UTF-8, preservando LF no JSON/Markdown e CRLF no CSV também no Windows, com flush protegido. Falha de escrita ou pipe fechado resulta em erro. `--output NEW` exige um destino novo em diretório já existente: a CLI escreve um temporário no mesmo diretório, faz flush e `fsync`, e publica com link exclusivo. Não há fallback de sobrescrita. Se outro processo cria o destino durante a publicação, o arquivo dele é preservado e somente o temporário da operação é removido. Usar a própria origem como destino falha preservando-a.
 
 | Código de saída | Significado |
 | --- | --- |

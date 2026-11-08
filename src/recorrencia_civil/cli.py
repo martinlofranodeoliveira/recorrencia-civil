@@ -119,7 +119,18 @@ def _silence_broken_stdout():
 def _write_stdout(text=None):
     try:
         if text is not None:
-            sys.stdout.write(text)
+            binary = getattr(sys.stdout, 'buffer', None)
+            if binary is None:
+                # Embedded callers may provide a text-only stream such as
+                # StringIO. Native stdout exposes the byte-preserving buffer.
+                sys.stdout.write(text)
+            else:
+                # Bypass platform newline translation and terminal encoding:
+                # JSON/Markdown use LF; CSV already contains exact CRLF bytes.
+                sys.stdout.flush()
+                payload = text.encode('utf-8')
+                if binary.write(payload) != len(payload):
+                    raise OSError('Incomplete stdout write')
         sys.stdout.flush()
     except (OSError, UnicodeError, ValueError):
         _silence_broken_stdout()
